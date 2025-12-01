@@ -1,216 +1,779 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minecraft Bedrock</title>
-  <style>
-    :root {
-      --primary: #8a2be2;
-      --primary-dark: #6a1cb2;
-      --secondary: #00bfff;
-      --background: #121212;
-      --card-bg: #1e1e1e;
-      --text: #ffffff;
-      --hover-glow: 0 0 15px rgba(138, 43, 226, 0.5);
-    }
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0; padding: 0;
-      transition: all 0.3s ease;
-    }
-    body {
-      font-family: 'Arial', sans-serif;
-      background: var(--background);
-      background-image: linear-gradient(to bottom right, rgba(138,43,226,0.1), rgba(0,191,255,0.05));
-      color: var(--text);
-      min-height: 100vh;
-      display: flex; flex-direction: column; align-items: center;
-      padding: 20px;
-    }
-    .header {
-      display: flex; flex-direction: column; align-items: center;
-      margin-bottom: 30px;
-    }
-    .logo {
-      width: 120px; height: 120px; border-radius: 50%;
-      margin-bottom: 15px;
-      box-shadow: 0 0 20px rgba(138,43,226,0.6);
-      border: 3px solid var(--primary);
-      object-fit: cover;
-    }
-    h1 {
-      font-size: 42px; font-weight: 800; letter-spacing: 2px;
-      text-shadow: 0 0 10px rgba(138,43,226,0.7);
-    }
-    h2 {
-      font-size: 22px; color: var(--secondary);
-      font-weight: 600; letter-spacing: 1px;
-      margin-bottom: 10px;
-    }
-    .social-icons {
-      display: flex; gap: 10px; margin: 5px 0;
-    }
-    .social-icon {
-      width: 45px; height: 45px; border-radius: 10px;
-      cursor: pointer; filter: drop-shadow(0 0 3px rgba(255,255,255,0.3));
-    }
-    .social-icon:hover {
-      transform: scale(1.15) rotate(5deg);
-      filter: drop-shadow(0 0 8px rgba(138,43,226,0.8));
-    }
-    .container {
-      width: 100%; max-width: 375px;
-    }
-    .section {
-      background: var(--card-bg); border-radius: 12px;
-      overflow: hidden; position: relative;
-      border: 1px solid rgba(138,43,226,0.3);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-    .section:hover {
-      transform: translateY(-5px); box-shadow: var(--hover-glow);
-    }
-    .section-title {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: #fff; font-size: 22px; font-weight: bold;
-      padding: 15px; text-align: center;
-      text-transform: uppercase; letter-spacing: 2px;
-    }
-    .glow-effect {
-      position: absolute; bottom: 0; left: 0;
-      width: 100%; height: 5px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
-      background-size: 200% 100%;
-      animation: glow 3s linear infinite;
-    }
-    @keyframes glow {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 200% 50%; }
-    }
-    .section-content {
-      display: grid; grid-template-columns: repeat(2,1fr);
-      gap: 3px; padding: 10px;
-    }
-    .button {
-      margin: 4px; padding: 10px;
-      background: rgba(255,255,255,0.08);
-      color: var(--text); text-align: center;
-      border-radius: 8px; cursor: pointer;
-      font-weight: 600; font-size: 16px;
-      position: relative; overflow: hidden; z-index: 1;
-      display: flex; align-items: center; justify-content: center;
-      gap: 8px;
-    }
-    .button::before {
-      content: ''; position: absolute;
-      top: 0; left: -100%; width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(138,43,226,0.2), transparent);
-      transition: all 0.5s; z-index: -1;
-    }
-    .button:hover {
-      background: rgba(138,43,226,0.2);
-      transform: translateY(-3px);
-      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-    }
-    .button:hover .emoji { transform: scale(1.2); }
-    .button:hover::before { left: 100%; }
-    .marketplace-button { font-size: 18px; }
-    .emoji { font-size: 1.2em; transition: transform 0.3s ease; }
-    .tall { grid-column: span 2; }
-    @media (max-width:500px){ h1{font-size:42px;} }
-
-    .modal-overlay {
-      display: none; position: fixed; top:0; left:0;
-      width:100vw; height:100vh;
-      background: rgba(0,0,0,0.7);
-      justify-content: center; align-items: center;
-      z-index: 1000;
-    }
-    .modal {
-      background: var(--card-bg);
-      border-radius: 15px;
-      padding: 30px 20px;
-      width: 90%; max-width: 320px;
-      text-align: center;
-      box-shadow: 0 0 25px rgba(138,43,226,0.6);
-    }
-    .modal h3 {
-      font-size: 22px; color: var(--primary);
-      margin-bottom: 20px;
-    }
-    .version-buttons {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-    .version-buttons .button {
-      width: 100%; font-size: 16px; padding: 10px 0;
-    }
-    .close-btn {
-      background-color: #b22222;
-    }
-    .close-btn:hover {
-      background-color: #d03d3d;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YASHO FREE - Minecraft Resources</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-image: url('https://i.pinimg.com/1200x/1a/6e/c3/1a6ec3245ad0b66777db47fe5297eb90.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 0;
+        }
+        
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #fff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            animation: pulseNature 3s infinite alternate;
+            transition: transform 0.5s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 150, 255, 0.6);
+        }
+        
+        @keyframes pulseNature {
+            0% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
+            33% { box-shadow: 0 0 30px rgba(255, 182, 193, 0.6); }
+            66% { box-shadow: 0 0 30px rgba(144, 238, 144, 0.6); }
+            100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
+        }
+        
+        h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 150, 255, 0.5);
+            animation: glowBlue 2s infinite alternate;
+        }
+        
+        @keyframes glowBlue {
+            from { text-shadow: 0 0 5px rgba(0, 150, 255, 0.5); }
+            to { text-shadow: 0 0 15px rgba(0, 150, 255, 0.8), 0 0 20px rgba(0, 150, 255, 0.6); }
+        }
+        
+        h2 {
+            font-size: 22px;
+            color: #ccc;
+            margin-bottom: 25px;
+            font-weight: 400;
+            animation: fadeInUp 1.2s ease-out 0.3s both;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 5px 0;
+            animation: fadeInUp 1.2s ease-out 0.5s both;
+        }
+        
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            text-decoration: none;
+            font-size: 22px;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .social-icon:hover::before {
+            left: 100%;
+        }
+        
+        .social-icon:hover {
+            background-color: #fff;
+            color: #000;
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+        
+        .social-icon.youtube:hover {
+            background-color: #FF0000;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+        }
+        
+        .social-icon.tiktok:hover {
+            background-color: #000;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+        
+        .social-icon.discord:hover {
+            background-color: #5865F2;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(0, 150, 255, 0.8);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 375px;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1.5s ease-out 0.3s both;
+        }
+        
+        .section {
+            background: rgba(30, 30, 30, 0.7);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 150, 255, 0.4);
+        }
+        
+        .section-title {
+            background: linear-gradient(135deg, rgba(0, 150, 255, 0.8), rgba(0, 100, 200, 0.8));
+            color: #fff;
+            font-size: 22px;
+            font-weight: bold;
+            padding: 15px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 150, 255, 0.5);
+        }
+        
+        .glow-effect {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, rgba(0, 150, 255, 0.8), rgba(100, 200, 255, 0.8), rgba(0, 150, 255, 0.8));
+            background-size: 200% 100%;
+            animation: glow 3s linear infinite;
+        }
+        
+        @keyframes glow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+        
+        .section-content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3px;
+            padding: 10px;
+            animation: fadeInUp 1.2s ease-out 0.7s both;
+        }
+        
+        .button {
+            margin: 4px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 150, 255, 0.2), transparent);
+            transition: left 0.6s;
+            z-index: -1;
+        }
+        
+        .button:hover::before {
+            left: 100%;
+        }
+        
+        .button:hover {
+            background: rgba(0, 150, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 150, 255, 0.5);
+        }
+        
+        .button:hover .button-icon {
+            transform: scale(1.2);
+            color: #0096FF;
+        }
+        
+        .marketplace-button {
+            font-size: 18px;
+        }
+        
+        .button-icon {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+            color: #fff;
+        }
+        
+        .tall {
+            grid-column: span 2;
+        }
+        
+        /* Particle animation for background - Updated with nature colors */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: floatParticle 15s infinite linear;
+        }
+        
+        /* Create particles with different colors */
+        .particle:nth-child(3n) {
+            background: rgba(255, 182, 193, 0.3);
+        }
+        
+        .particle:nth-child(3n+1) {
+            background: rgba(144, 238, 144, 0.3);
+        }
+        
+        .particle:nth-child(3n+2) {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) translateX(20px); opacity: 0; }
+        }
+        
+        /* Ripple effect - Updated with pink color */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 182, 193, 0.6);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        /* Overlay styles */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(15px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .overlay.closing {
+            animation: fadeOut 0.3s ease-out forwards;
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        
+        .overlay-content {
+            background: rgba(20, 20, 20, 0.6);
+            border-radius: 16px;
+            padding: 25px;
+            width: 90%;
+            max-width: 320px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0, 150, 255, 0.4);
+            backdrop-filter: blur(20px);
+            animation: slideDown 0.4s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .overlay-content.closing {
+            animation: slideUp 0.3s ease-out forwards;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(-20px); opacity: 0; }
+        }
+        
+        .overlay-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 150, 255, 0.1), transparent);
+            transition: left 0.6s;
+        }
+        
+        .overlay-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(0, 150, 255, 0.5);
+            animation: glowBlue 2s infinite alternate;
+        }
+        
+        .overlay-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .overlay-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            flex: 1;
+            min-width: 100px;
+            gap: 8px;
+        }
+        
+        .overlay-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 150, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+        
+        .overlay-link:hover::before {
+            left: 100%;
+        }
+        
+        .overlay-link:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 150, 255, 0.5);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .overlay-link-icon {
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+        
+        .overlay-link:hover .overlay-link-icon {
+            transform: scale(1.2) rotate(10deg);
+            color: #0096FF;
+        }
+        
+        .overlay-link-text {
+            font-weight: 500;
+            font-size: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .overlay-link:hover .overlay-link-text {
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+        }
+        
+        .close-overlay {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: rgba(0, 150, 255, 0.2);
+            border: 1px solid rgba(0, 150, 255, 0.5);
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        .close-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .close-overlay:hover::before {
+            left: 100%;
+        }
+        
+        .close-overlay:hover {
+            background: rgba(0, 150, 255, 0.4);
+            transform: scale(1.02);
+            box-shadow: 0 0 15px rgba(0, 150, 255, 0.4);
+        }
+        
+        .close-overlay:active {
+            transform: scale(0.95);
+            transition: transform 0.1s ease;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                max-width: 360px;
+                padding: 10px;
+            }
+            
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            h2 {
+                font-size: 16px;
+            }
+            
+            .button {
+                padding: 8px;
+                font-size: 14px;
+            }
+            
+            .social-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+            
+            .overlay-content {
+                padding: 20px;
+                max-width: 280px;
+            }
+            
+            .overlay-links {
+                gap: 12px;
+            }
+            
+            .overlay-link {
+                padding: 12px 16px;
+                min-width: 80px;
+                gap: 6px;
+            }
+            
+            .overlay-link-icon {
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .container {
+                max-width: 320px;
+            }
+            
+            .button {
+                padding: 7px;
+            }
+            
+            .overlay-content {
+                max-width: 260px;
+            }
+        }
+    </style>
 </head>
 <body>
-
-  <div class="header">
-    <img class="logo" src="https://i.pinimg.com/736x/d3/1d/07/d31d07313f89289e06d6cae9a38d998e.jpg" alt="Yasho Logo">
-    <h1>YASHO</h1>
-    <h2>FREE</h2>
-    <div class="social-icons">
-      <img class="social-icon" src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube" onclick="window.open('https://www.youtube.com/@Vultir','_blank')">
-      <img class="social-icon" src="https://sf-static.tiktokcdn.com/obj/eden-sg/uhtyvueh7nulogpoguhm/tiktok-icon2.png" alt="TikTok" onclick="window.open('https://www.tiktok.com/@.yashofree','_blank')">
-      <img class="social-icon" src="https://art.pixilart.com/47700d2e75da.png" alt="Discord" onclick="window.open('https://discord.gg/fvfd45bR2g','_blank')">
-    </div>
-  </div>
-
-  <div class="container">
-    <div class="section">
-      <div class="section-title">🎮 Minecraft 🎮</div>
-      <div class="glow-effect"></div>
-      <div class="section-content">
-        <div class="button" onclick="window.open('https://mcbemap.github.io/dl/', '_blank')"><span class="emoji">🗺️</span> Maps</div>
-        <div class="button" onclick="window.open('https://mcbeaddon.github.io/new/', '_blank')"><span class="emoji">🧩</span> Addons</div>
-        <div class="button" onclick="window.open('https://mcbeshader.github.io/dl/', '_blank')"><span class="emoji">✨</span> Shaders</div>
-        <div class="button" onclick="window.open('https://mcbeclient.github.io/dl/', '_blank')"><span class="emoji">🖥️</span> Clients</div>
-        <div class="button" onclick="window.open('https://mcbepack.github.io/dl/', '_blank')"><span class="emoji">🌄</span> Textures</div>
-        <div class="button" onclick="window.open('https://mcbeskin.github.io/dl/', '_blank')"><span class="emoji">👕</span> Skins</div>
-        <div class="button" onclick="window.open('https://mcbemodpack.github.io/dl/', '_blank')"><span class="emoji">🐉</span> ModPacks</div>
-        <div class="button marketplace-button" onclick="openMarketplaceModal()"><span class="emoji">🛒</span> Marketplace</div>
-        <div class="button tall" onclick="window.open('https://mcdlfree.github.io/w/', '_blank')">
-          ⬇️ Download Minecraft ⬇️
+    <div class="particles" id="particles"></div>
+    
+    <!-- Marketplace Overlay -->
+    <div class="overlay" id="marketplaceOverlay">
+        <div class="overlay-content" id="overlayContent">
+            <h2 class="overlay-title">Select Version</h2>
+            <div class="overlay-links">
+                <a href="https://craftydlc.netlify.app" class="overlay-link" target="_blank">
+                    <i class="fas fa-rocket overlay-link-icon"></i>
+                    <div class="overlay-link-text">V1</div>
+                </a>
+                <a href="https://marketplacedlc.netlify.app" class="overlay-link" target="_blank">
+                    <i class="fas fa-bolt overlay-link-icon"></i>
+                    <div class="overlay-link-text">V2</div>
+                </a>
+            </div>
+            <button class="close-overlay" id="closeOverlay">Close</button>
         </div>
-      </div>
     </div>
-  </div>
-
-  <div class="modal-overlay" id="marketplaceModal">
-    <div class="modal">
-      <h3>Select Version</h3>
-      <div class="version-buttons">
-        <div class="button" onclick="window.open('https://craftydlc.github.io/v3/','_blank')">🔹 V1</div>
-        <div class="button" onclick="window.open('https://marketplacedlc.github.io/free/','_blank')">🔸 V2</div>
-      </div>
-      <div class="button close-btn" onclick="closeMarketplaceModal()">❌ Close</div>
+    
+    <div class="header">
+        <img class="logo" src="https://i.pinimg.com/736x/d3/1d/07/d31d07313f89289e06d6cae9a38d998e.jpg" alt="YASHO Logo">
+        <div class="social-icons">
+            <a href="https://www.youtube.com/@Vultir" class="social-icon youtube" target="_blank">
+                <i class="fab fa-youtube"></i>
+            </a>
+            <a href="https://www.tiktok.com/@.yashofree" class="social-icon tiktok" target="_blank">
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://discord.gg/fvfd45bR2g" class="social-icon discord" target="_blank">
+                <i class="fab fa-discord"></i>
+            </a>
+        </div>
     </div>
-  </div>
 
-  <script>
-    function openMarketplaceModal() {
-      document.getElementById('marketplaceModal').style.display = 'flex';
-    }
-    function closeMarketplaceModal() {
-      document.getElementById('marketplaceModal').style.display = 'none';
-    }
-    document.getElementById('marketplaceModal').addEventListener('click', e => {
-      if (e.target === e.currentTarget) closeMarketplaceModal();
-    });
-  </script>
+    <div class="container">
+        <div class="section">
+            <div class="section-title"><i class="fas fa-gamepad"></i> Minecraft <i class="fas fa-gamepad"></i></div>
+            <div class="glow-effect"></div>
+            <div class="section-content">
+                <div class="button" onclick="openLink('https://mcbemap.github.io/dl/')">
+                    <i class="fas fa-map button-icon"></i> Maps
+                </div>
+                <div class="button" onclick="openLink('https://mcbeaddon.github.io/new/')">
+                    <i class="fas fa-puzzle-piece button-icon"></i> Addons
+                </div>
+                <div class="button" onclick="openLink('https://mcbeshader.github.io/dl/')">
+                    <i class="fas fa-star button-icon"></i> Shaders
+                </div>
+                <div class="button" onclick="openLink('https://mcbeclient.github.io/dl/')">
+                    <i class="fas fa-desktop button-icon"></i> Clients
+                </div>
+                <div class="button" onclick="openLink('https://mcbepack.github.io/dl/')">
+                    <i class="fas fa-image button-icon"></i> Textures
+                </div>
+                <div class="button" onclick="openLink('https://mcbeskin.github.io/dl/')">
+                    <i class="fas fa-user button-icon"></i> Skins
+                </div>
+                <div class="button" onclick="openLink('https://mcbemodpack.github.io/dl/')">
+                    <i class="fas fa-dragon button-icon"></i> ModPacks
+                </div>
+                <div class="button marketplace-button" id="marketplaceBtn">
+                    <i class="fas fa-shopping-cart button-icon"></i> Marketplace
+                </div>
+                <div class="button tall" onclick="openLink('https://mcdlfree.github.io/w/')">
+                    <i class="fas fa-download button-icon"></i> Download Minecraft
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles with different colors
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size
+                const size = Math.random() * 6 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}vw`;
+                
+                // Random animation delay and duration
+                const delay = Math.random() * 15;
+                const duration = Math.random() * 10 + 15;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Open external links
+        function openLink(url) {
+            window.open(url, '_blank');
+        }
+        
+        // Marketplace overlay functionality
+        const marketplaceBtn = document.getElementById('marketplaceBtn');
+        const marketplaceOverlay = document.getElementById('marketplaceOverlay');
+        const overlayContent = document.getElementById('overlayContent');
+        const closeOverlay = document.getElementById('closeOverlay');
+        
+        marketplaceBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            marketplaceOverlay.style.display = 'flex';
+            // Remove any closing classes if they exist
+            marketplaceOverlay.classList.remove('closing');
+            overlayContent.classList.remove('closing');
+        });
+        
+        closeOverlay.addEventListener('click', function() {
+            // Add closing animations
+            marketplaceOverlay.classList.add('closing');
+            overlayContent.classList.add('closing');
+            
+            // Hide overlay after animation completes
+            setTimeout(() => {
+                marketplaceOverlay.style.display = 'none';
+                // Remove closing classes for next time
+                marketplaceOverlay.classList.remove('closing');
+                overlayContent.classList.remove('closing');
+            }, 300);
+        });
+        
+        // Close overlay when clicking outside content
+        marketplaceOverlay.addEventListener('click', function(e) {
+            if (e.target === marketplaceOverlay) {
+                // Add closing animations
+                marketplaceOverlay.classList.add('closing');
+                overlayContent.classList.add('closing');
+                
+                // Hide overlay after animation completes
+                setTimeout(() => {
+                    marketplaceOverlay.style.display = 'none';
+                    // Remove closing classes for next time
+                    marketplaceOverlay.classList.remove('closing');
+                    overlayContent.classList.remove('closing');
+                }, 300);
+            }
+        });
+        
+        // Add ripple effect to buttons
+        document.querySelectorAll('.button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Don't create ripple for marketplace button (it has overlay)
+                if (this.id === 'marketplaceBtn') return;
+                
+                // Create ripple element
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = `${size}px`;
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                ripple.classList.add('ripple');
+                
+                this.appendChild(ripple);
+                
+                // Remove ripple after animation
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+        
+        // Initialize particles when page loads
+        document.addEventListener('DOMContentLoaded', createParticles);
+    </script>
 </body>
-
 </html>
