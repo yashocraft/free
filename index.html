@@ -6,16 +6,13 @@
     <title>Minecraft Bedrock</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* EXACT SAME STRUCTURE, JUST OPTIMIZED */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        }
-        
-        html {
-            height: 100%;
-            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
@@ -27,14 +24,14 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            position: relative;
             overflow-x: hidden;
+            position: relative;
         }
         
-        /* FIXED: Proper fixed background solution */
+        /* Fixed background - optimized */
         body::before {
             content: '';
-            position: fixed; /* Changed from absolute to fixed */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -42,14 +39,13 @@
             background-image: url('https://i.pinimg.com/1200x/1a/6e/c3/1a6ec3245ad0b66777db47fe5297eb90.jpg');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed; /* This keeps it fixed while scrolling */
+            background-attachment: fixed;
             z-index: -2;
         }
         
         body::after {
             content: '';
-            position: fixed; /* Changed from absolute to fixed */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -58,55 +54,7 @@
             z-index: -1;
         }
         
-        /* Performance optimizations */
-        .header, .container, .section, .button {
-            will-change: transform;
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
-        }
-        
-        /* Optimized animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px) translateZ(0); }
-            to { opacity: 1; transform: translateY(0) translateZ(0); }
-        }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px) translateZ(0); }
-            to { opacity: 1; transform: translateY(0) translateZ(0); }
-        }
-        
-        @keyframes glowBlue {
-            0% { text-shadow: 0 0 5px rgba(0, 150, 255, 0.5); }
-            100% { text-shadow: 0 0 15px rgba(0, 150, 255, 0.8), 0 0 20px rgba(0, 150, 255, 0.6); }
-        }
-        
-        @keyframes pulseNature {
-            0% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
-            33% { box-shadow: 0 0 30px rgba(255, 182, 193, 0.6); }
-            66% { box-shadow: 0 0 30px rgba(144, 238, 144, 0.6); }
-            100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
-        }
-        
-        @keyframes floatParticle {
-            0% { transform: translateY(100vh) translateX(0) translateZ(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100px) translateX(20px) translateZ(0); opacity: 0; }
-        }
-        
-        @keyframes glow {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
-        }
-        
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-        
+        /* Header - optimized animations */
         .header {
             display: flex;
             flex-direction: column;
@@ -126,7 +74,7 @@
             border: 3px solid #fff;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
             animation: pulseNature 3s infinite alternate;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
         .logo:hover {
@@ -151,6 +99,7 @@
             animation: fadeInUp 1.2s ease-out 0.3s both;
         }
         
+        /* Social icons - optimized */
         .social-icons {
             display: flex;
             justify-content: center;
@@ -175,6 +124,7 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
+            transform: translateZ(0);
         }
         
         .social-icon:hover {
@@ -199,6 +149,7 @@
             color: #fff;
         }
         
+        /* Container - optimized */
         .container {
             width: 100%;
             max-width: 375px;
@@ -216,11 +167,13 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: translateZ(0);
         }
         
         .section:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) translateZ(0);
             box-shadow: 0 10px 25px rgba(0, 150, 255, 0.4);
         }
         
@@ -245,6 +198,7 @@
             background: linear-gradient(90deg, rgba(0, 150, 255, 0.8), rgba(100, 200, 255, 0.8), rgba(0, 150, 255, 0.8));
             background-size: 200% 100%;
             animation: glow 3s linear infinite;
+            transform: translateZ(0);
         }
         
         .section-content {
@@ -276,11 +230,12 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            transform: translateZ(0);
         }
         
         .button:hover {
             background: rgba(0, 150, 255, 0.2);
-            transform: translateY(-3px);
+            transform: translateY(-3px) translateZ(0);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             border-color: rgba(0, 150, 255, 0.5);
         }
@@ -296,7 +251,7 @@
         
         .button-icon {
             font-size: 1.2em;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             color: #fff;
         }
         
@@ -304,7 +259,7 @@
             grid-column: span 2;
         }
         
-        /* Optimized particles for mobile */
+        /* Particles - optimized for mobile */
         .particles {
             position: fixed;
             top: 0;
@@ -319,12 +274,23 @@
         .particle {
             position: absolute;
             border-radius: 50%;
-            animation: floatParticle 20s linear infinite;
+            animation: floatParticle 25s linear infinite;
             transform: translateZ(0);
-            -webkit-transform: translateZ(0);
+            opacity: 0.3;
         }
         
-        /* Ripple effect */
+        .particle:nth-child(3n) {
+            background: rgba(255, 182, 193, 0.3);
+        }
+        
+        .particle:nth-child(3n+1) {
+            background: rgba(144, 238, 144, 0.3);
+        }
+        
+        .particle:nth-child(3n+2) {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
         .ripple {
             position: absolute;
             border-radius: 50%;
@@ -332,30 +298,9 @@
             transform: scale(0);
             animation: ripple 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             pointer-events: none;
-            transform-origin: center;
         }
         
-        /* Overlay animations */
-        @keyframes fadeInOverlay {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes fadeOutOverlay {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
-        
-        @keyframes slideDown {
-            from { transform: translateY(-20px) scale(0.95); opacity: 0; }
-            to { transform: translateY(0) scale(1); opacity: 1; }
-        }
-        
-        @keyframes slideUp {
-            from { transform: translateY(0) scale(1); opacity: 1; }
-            to { transform: translateY(-20px) scale(0.95); opacity: 0; }
-        }
-        
+        /* Overlay - optimized */
         .overlay {
             display: none;
             position: fixed;
@@ -366,14 +311,14 @@
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            z-index: 1000;
+            z-index: 100;
             align-items: center;
             justify-content: center;
-            animation: fadeInOverlay 0.3s ease-out;
+            animation: fadeIn 0.3s ease-out;
         }
         
         .overlay.closing {
-            animation: fadeOutOverlay 0.3s ease-out forwards;
+            animation: fadeOut 0.3s ease-out forwards;
         }
         
         .overlay-content {
@@ -391,7 +336,6 @@
             position: relative;
             overflow: hidden;
             transform: translateZ(0);
-            -webkit-transform: translateZ(0);
         }
         
         .overlay-content.closing {
@@ -431,10 +375,11 @@
             flex: 1;
             min-width: 100px;
             gap: 8px;
+            transform: translateZ(0);
         }
         
         .overlay-link:hover {
-            transform: translateY(-3px) scale(1.05);
+            transform: translateY(-3px) scale(1.05) translateZ(0);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
             border-color: rgba(0, 150, 255, 0.5);
             background-color: rgba(255, 255, 255, 0.1);
@@ -442,12 +387,18 @@
         
         .overlay-link-icon {
             font-size: 18px;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
         .overlay-link:hover .overlay-link-icon {
             transform: scale(1.2) rotate(10deg);
             color: #0096FF;
+        }
+        
+        .overlay-link-text {
+            font-weight: 500;
+            font-size: 16px;
+            text-align: center;
         }
         
         .close-overlay {
@@ -463,12 +414,70 @@
             position: relative;
             overflow: hidden;
             width: 100%;
+            transform: translateZ(0);
         }
         
         .close-overlay:hover {
             background: rgba(0, 150, 255, 0.4);
-            transform: scale(1.02);
+            transform: scale(1.02) translateZ(0);
             box-shadow: 0 0 15px rgba(0, 150, 255, 0.4);
+        }
+        
+        /* Animations - optimized */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px) translateZ(0); }
+            to { opacity: 1; transform: translateY(0) translateZ(0); }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px) translateZ(0); }
+            to { opacity: 1; transform: translateY(0) translateZ(0); }
+        }
+        
+        @keyframes glowBlue {
+            from { text-shadow: 0 0 5px rgba(0, 150, 255, 0.5); }
+            to { text-shadow: 0 0 15px rgba(0, 150, 255, 0.8), 0 0 20px rgba(0, 150, 255, 0.6); }
+        }
+        
+        @keyframes pulseNature {
+            0% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
+            33% { box-shadow: 0 0 30px rgba(255, 182, 193, 0.6); }
+            66% { box-shadow: 0 0 30px rgba(144, 238, 144, 0.6); }
+            100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
+        }
+        
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) translateX(0) translateZ(0); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100px) translateX(20px) translateZ(0); opacity: 0; }
+        }
+        
+        @keyframes glow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+        
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes slideDown {
+            from { transform: translateY(-20px) scale(0.95) translateZ(0); opacity: 0; }
+            to { transform: translateY(0) scale(1) translateZ(0); opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(0) scale(1) translateZ(0); opacity: 1; }
+            to { transform: translateY(-20px) scale(0.95) translateZ(0); opacity: 0; }
         }
         
         /* Mobile optimizations */
@@ -494,26 +503,17 @@
             .button {
                 padding: 8px;
                 font-size: 14px;
-                touch-action: manipulation;
             }
             
             .social-icon {
                 width: 45px;
                 height: 45px;
                 font-size: 20px;
-                touch-action: manipulation;
-            }
-            
-            .section {
-                backdrop-filter: blur(5px);
-                -webkit-backdrop-filter: blur(5px);
             }
             
             .overlay-content {
                 padding: 20px;
                 max-width: 280px;
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
             }
             
             .overlay-links {
@@ -524,28 +524,23 @@
                 padding: 12px 16px;
                 min-width: 80px;
                 gap: 6px;
-                touch-action: manipulation;
             }
             
             .overlay-link-icon {
                 font-size: 16px;
             }
             
-            /* Optimize hover effects for mobile */
-            .social-icon:hover,
-            .button:hover,
-            .overlay-link:hover,
-            .close-overlay:hover {
-                transform: none;
-            }
-            
-            /* Keep animations but optimize performance */
+            /* Disable complex animations on mobile for better performance */
             .logo {
                 animation: pulseNature 5s infinite alternate;
             }
             
             .particle {
-                animation-duration: 25s;
+                animation-duration: 30s;
+            }
+            
+            .glow-effect {
+                animation-duration: 5s;
             }
         }
         
@@ -563,43 +558,22 @@
             }
         }
         
-        /* Prevent text selection on buttons */
-        .button, .social-icon, .overlay-link, .close-overlay {
-            user-select: none;
-            -webkit-user-select: none;
+        /* Performance enhancements */
+        .logo, .social-icon, .section, .button, .overlay-link, .close-overlay {
+            will-change: transform;
         }
         
         /* Reduced motion preference */
         @media (prefers-reduced-motion: reduce) {
-            .logo,
-            .particle,
-            .glow-effect,
-            h1,
-            .overlay-title {
-                animation: none;
-            }
-            
-            .header,
-            .social-icons,
-            .container,
-            .section-content,
-            .overlay,
-            .overlay-content {
-                animation: none !important;
-            }
-            
-            .section,
-            .button,
-            .social-icon,
-            .overlay-link,
-            .close-overlay {
-                transition: none;
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Optimized particles -->
     <div class="particles" id="particles"></div>
     
     <!-- Marketplace Overlay -->
@@ -672,34 +646,22 @@
     </div>
 
     <script>
-        // Performance-optimized particles
+        // Optimized version of original JavaScript
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
             const isMobile = window.innerWidth <= 480;
-            const particleCount = isMobile ? 15 : 25; // Balanced for performance
-            
-            // Clear existing particles
-            particlesContainer.innerHTML = '';
+            const particleCount = isMobile ? 15 : 30;
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 
-                const size = Math.random() * 5 + 1;
+                const size = Math.random() * 6 + 2;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
                 particle.style.left = `${Math.random() * 100}vw`;
                 
-                // Use CSS variables for better performance
-                if (i % 3 === 0) {
-                    particle.style.backgroundColor = 'rgba(255, 182, 193, 0.2)';
-                } else if (i % 3 === 1) {
-                    particle.style.backgroundColor = 'rgba(144, 238, 144, 0.2)';
-                } else {
-                    particle.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-                }
-                
-                const delay = Math.random() * 10;
+                const delay = Math.random() * 15;
                 const duration = Math.random() * 10 + 20;
                 particle.style.animationDelay = `${delay}s`;
                 particle.style.animationDuration = `${duration}s`;
@@ -708,12 +670,11 @@
             }
         }
         
-        // Open external links
         function openLink(url) {
             window.open(url, '_blank');
         }
         
-        // Marketplace overlay functionality
+        // Marketplace overlay
         const marketplaceBtn = document.getElementById('marketplaceBtn');
         const marketplaceOverlay = document.getElementById('marketplaceOverlay');
         const overlayContent = document.getElementById('overlayContent');
@@ -721,11 +682,10 @@
         
         marketplaceBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            e.stopPropagation();
             marketplaceOverlay.style.display = 'flex';
             marketplaceOverlay.classList.remove('closing');
             overlayContent.classList.remove('closing');
-        }, { passive: true });
+        });
         
         closeOverlay.addEventListener('click', function() {
             marketplaceOverlay.classList.add('closing');
@@ -736,9 +696,8 @@
                 marketplaceOverlay.classList.remove('closing');
                 overlayContent.classList.remove('closing');
             }, 300);
-        }, { passive: true });
+        });
         
-        // Close overlay when clicking outside content
         marketplaceOverlay.addEventListener('click', function(e) {
             if (e.target === marketplaceOverlay) {
                 marketplaceOverlay.classList.add('closing');
@@ -750,20 +709,18 @@
                     overlayContent.classList.remove('closing');
                 }, 300);
             }
-        }, { passive: true });
+        });
         
-        // Ripple effect with performance optimizations
+        // Ripple effect
         let lastRippleTime = 0;
         document.querySelectorAll('.button').forEach(button => {
             button.addEventListener('click', function(e) {
                 if (this.id === 'marketplaceBtn') return;
                 
-                // Throttle ripple effect
                 const now = Date.now();
                 if (now - lastRippleTime < 300) return;
                 lastRippleTime = now;
                 
-                // Create ripple element
                 const ripple = document.createElement('span');
                 const rect = this.getBoundingClientRect();
                 const size = Math.max(rect.width, rect.height);
@@ -777,57 +734,54 @@
                 
                 this.appendChild(ripple);
                 
-                // Remove ripple after animation
                 setTimeout(() => {
                     if (ripple.parentNode === this) {
                         this.removeChild(ripple);
                     }
                 }, 600);
             });
-            
-            // Add touch feedback for mobile
-            button.addEventListener('touchstart', function() {
-                if (this.id === 'marketplaceBtn') return;
-                this.style.opacity = '0.8';
-                setTimeout(() => {
-                    this.style.opacity = '1';
-                }, 200);
-            }, { passive: true });
         });
         
-        // Initialize with optimized particles
-        document.addEventListener('DOMContentLoaded', function() {
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
             createParticles();
             
-            // Recreate particles on resize (with debounce)
-            let resizeTimeout;
-            window.addEventListener('resize', function() {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(createParticles, 250);
-            });
+            // Mobile touch optimizations
+            if ('ontouchstart' in window) {
+                document.querySelectorAll('.button, .social-icon, .overlay-link, .close-overlay').forEach(el => {
+                    el.addEventListener('touchstart', function() {
+                        this.style.opacity = '0.8';
+                    }, { passive: true });
+                    
+                    el.addEventListener('touchend', function() {
+                        this.style.opacity = '1';
+                    }, { passive: true });
+                });
+            }
             
-            // Prevent zoom on double tap (mobile)
-            let lastTouchEnd = 0;
-            document.addEventListener('touchend', function(event) {
-                const now = Date.now();
-                if (now - lastTouchEnd <= 300) {
-                    event.preventDefault();
+            // Prevent context menu on buttons
+            document.addEventListener('contextmenu', (e) => {
+                if (e.target.closest('.button, .social-icon, .overlay-link')) {
+                    e.preventDefault();
                 }
-                lastTouchEnd = now;
-            }, { passive: false });
-            
-            // Force GPU acceleration for animations
-            document.querySelectorAll('.logo, .particle, .section, .button').forEach(el => {
-                el.style.transform = 'translateZ(0)';
             });
         });
         
-        // Request animation frame for smoother animations
+        // Smooth scrolling
+        document.documentElement.style.scrollBehavior = 'smooth';
+        
+        // Request animation frame for smoothness
+        let animationId;
         function animate() {
-            requestAnimationFrame(animate);
-            // Any frame-by-frame animations would go here
+            animationId = requestAnimationFrame(animate);
+            // Smooth animations here if needed
         }
         animate();
+        
+        // Cleanup on unload
+        window.addEventListener('beforeunload', () => {
+            cancelAnimationFrame(animationId);
+        });
     </script>
 </body>
 </html>
