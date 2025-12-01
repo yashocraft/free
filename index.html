@@ -13,6 +13,11 @@
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
         
+        html {
+            height: 100%;
+            overflow-x: hidden;
+        }
+        
         body {
             background-color: #000;
             color: #fff;
@@ -26,9 +31,10 @@
             overflow-x: hidden;
         }
         
-        /* Fixed background solution - prevents image adjustment during scroll */
-        .fixed-bg {
-            position: fixed;
+        /* FIXED: Proper fixed background solution */
+        body::before {
+            content: '';
+            position: fixed; /* Changed from absolute to fixed */
             top: 0;
             left: 0;
             width: 100%;
@@ -37,12 +43,13 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            background-attachment: fixed; /* This keeps it fixed while scrolling */
             z-index: -2;
         }
         
-        .fixed-bg::after {
+        body::after {
             content: '';
-            position: absolute;
+            position: fixed; /* Changed from absolute to fixed */
             top: 0;
             left: 0;
             width: 100%;
@@ -592,9 +599,6 @@
     </style>
 </head>
 <body>
-    <!-- Fixed background element -->
-    <div class="fixed-bg"></div>
-    
     <!-- Optimized particles -->
     <div class="particles" id="particles"></div>
     
