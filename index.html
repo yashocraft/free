@@ -6,13 +6,11 @@
     <title>Minecraft Bedrock</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* EXACT SAME STRUCTURE, JUST OPTIMIZED */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            -webkit-tap-highlight-color: transparent;
         }
         
         body {
@@ -24,37 +22,25 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            overflow-x: hidden;
-            position: relative;
-        }
-        
-        /* Fixed background - optimized */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://i.pinimg.com/1200x/1a/6e/c3/1a6ec3245ad0b66777db47fe5297eb90.jpg');
+            background-image: url('https://i.pinimg.com/736x/d3/1d/07/d31d07313f89289e06d6cae9a38d998e.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            z-index: -2;
+            position: relative;
+            overflow-x: hidden;
         }
         
-        body::after {
+        body::before {
             content: '';
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            right: 0;
+            bottom: 0;
             background: rgba(0, 0, 0, 0.75);
-            z-index: -1;
+            z-index: 0;
         }
         
-        /* Header - optimized animations */
         .header {
             display: flex;
             flex-direction: column;
@@ -65,6 +51,11 @@
             animation: fadeIn 1.5s ease-out;
         }
         
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
         .logo {
             width: 120px;
             height: 120px;
@@ -73,13 +64,19 @@
             margin-bottom: 15px;
             border: 3px solid #fff;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-            animation: pulseNature 3s infinite alternate;
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation: pulseBlue 3s infinite alternate;
+            transition: transform 0.5s ease;
         }
         
         .logo:hover {
             transform: scale(1.05);
             box-shadow: 0 0 30px rgba(0, 150, 255, 0.6);
+        }
+        
+        @keyframes pulseBlue {
+            0% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(0, 150, 255, 0.6); }
+            100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
         }
         
         h1 {
@@ -91,6 +88,11 @@
             animation: glowBlue 2s infinite alternate;
         }
         
+        @keyframes glowBlue {
+            from { text-shadow: 0 0 5px rgba(0, 150, 255, 0.5); }
+            to { text-shadow: 0 0 15px rgba(0, 150, 255, 0.8), 0 0 20px rgba(0, 150, 255, 0.6); }
+        }
+        
         h2 {
             font-size: 22px;
             color: #ccc;
@@ -99,7 +101,11 @@
             animation: fadeInUp 1.2s ease-out 0.3s both;
         }
         
-        /* Social icons - optimized */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
         .social-icons {
             display: flex;
             justify-content: center;
@@ -119,37 +125,53 @@
             color: #fff;
             text-decoration: none;
             font-size: 22px;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.4s ease;
             border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
             cursor: pointer;
-            transform: translateZ(0);
+        }
+        
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .social-icon:hover::before {
+            left: 100%;
         }
         
         .social-icon:hover {
             background-color: #fff;
             color: #000;
-            transform: scale(1.15);
+            transform: scale(1.15) rotate(5deg);
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
         }
         
         .social-icon.youtube:hover {
             background-color: #FF0000;
             color: #fff;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
         }
         
         .social-icon.tiktok:hover {
             background-color: #000;
             color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
         }
         
         .social-icon.discord:hover {
             background-color: #5865F2;
             color: #fff;
+            box-shadow: 0 0 20px rgba(0, 150, 255, 0.8);
         }
         
-        /* Container - optimized */
         .container {
             width: 100%;
             max-width: 375px;
@@ -166,14 +188,11 @@
             border: 1px solid rgba(0, 150, 255, 0.3);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-                        box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            transform: translateZ(0);
+            transition: all 0.4s ease;
         }
         
         .section:hover {
-            transform: translateY(-5px) translateZ(0);
+            transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0, 150, 255, 0.4);
         }
         
@@ -198,7 +217,11 @@
             background: linear-gradient(90deg, rgba(0, 150, 255, 0.8), rgba(100, 200, 255, 0.8), rgba(0, 150, 255, 0.8));
             background-size: 200% 100%;
             animation: glow 3s linear infinite;
-            transform: translateZ(0);
+        }
+        
+        @keyframes glow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
         }
         
         .section-content {
@@ -226,16 +249,30 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.4s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transform: translateZ(0);
+        }
+        
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 150, 255, 0.2), transparent);
+            transition: left 0.6s;
+            z-index: -1;
+        }
+        
+        .button:hover::before {
+            left: 100%;
         }
         
         .button:hover {
             background: rgba(0, 150, 255, 0.2);
-            transform: translateY(-3px) translateZ(0);
+            transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             border-color: rgba(0, 150, 255, 0.5);
         }
@@ -251,7 +288,7 @@
         
         .button-icon {
             font-size: 1.2em;
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: transform 0.3s ease;
             color: #fff;
         }
         
@@ -259,48 +296,49 @@
             grid-column: span 2;
         }
         
-        /* Particles - optimized for mobile */
+        /* Particle animation for background */
         .particles {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            pointer-events: none;
+            z-index: 0;
             overflow: hidden;
         }
         
         .particle {
             position: absolute;
+            background: rgba(0, 150, 255, 0.3);
             border-radius: 50%;
-            animation: floatParticle 25s linear infinite;
-            transform: translateZ(0);
-            opacity: 0.3;
+            animation: floatParticle 15s infinite linear;
         }
         
-        .particle:nth-child(3n) {
-            background: rgba(255, 182, 193, 0.3);
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) translateX(20px); opacity: 0; }
         }
         
-        .particle:nth-child(3n+1) {
-            background: rgba(144, 238, 144, 0.3);
-        }
-        
-        .particle:nth-child(3n+2) {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        
+        /* Ripple effect */
         .ripple {
             position: absolute;
             border-radius: 50%;
-            background: rgba(255, 182, 193, 0.6);
+            background: rgba(0, 150, 255, 0.6);
             transform: scale(0);
-            animation: ripple 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation: ripple 0.6s linear;
             pointer-events: none;
         }
         
-        /* Overlay - optimized */
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        /* Overlay styles */
         .overlay {
             display: none;
             position: fixed;
@@ -310,7 +348,6 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
             z-index: 100;
             align-items: center;
             justify-content: center;
@@ -319,6 +356,11 @@
         
         .overlay.closing {
             animation: fadeOut 0.3s ease-out forwards;
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
         }
         
         .overlay-content {
@@ -331,15 +373,29 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 0 30px rgba(0, 150, 255, 0.4);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            animation: slideDown 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation: slideDown 0.4s ease-out;
             position: relative;
             overflow: hidden;
-            transform: translateZ(0);
         }
         
         .overlay-content.closing {
-            animation: slideUp 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            animation: slideUp 0.3s ease-out forwards;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(-20px); opacity: 0; }
+        }
+        
+        .overlay-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 150, 255, 0.1), transparent);
+            transition: left 0.6s;
         }
         
         .overlay-title {
@@ -367,19 +423,32 @@
             border-radius: 12px;
             text-decoration: none;
             color: #fff;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             flex: 1;
             min-width: 100px;
             gap: 8px;
-            transform: translateZ(0);
+        }
+        
+        .overlay-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 150, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+        
+        .overlay-link:hover::before {
+            left: 100%;
         }
         
         .overlay-link:hover {
-            transform: translateY(-3px) scale(1.05) translateZ(0);
+            transform: translateY(-3px) scale(1.05);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
             border-color: rgba(0, 150, 255, 0.5);
             background-color: rgba(255, 255, 255, 0.1);
@@ -387,7 +456,7 @@
         
         .overlay-link-icon {
             font-size: 18px;
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: transform 0.3s ease;
         }
         
         .overlay-link:hover .overlay-link-icon {
@@ -399,6 +468,12 @@
             font-weight: 500;
             font-size: 16px;
             text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .overlay-link:hover .overlay-link-text {
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
         }
         
         .close-overlay {
@@ -409,78 +484,39 @@
             border-radius: 10px;
             color: #fff;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.3s ease;
             font-weight: 500;
             position: relative;
             overflow: hidden;
             width: 100%;
-            transform: translateZ(0);
+        }
+        
+        .close-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .close-overlay:hover::before {
+            left: 100%;
         }
         
         .close-overlay:hover {
             background: rgba(0, 150, 255, 0.4);
-            transform: scale(1.02) translateZ(0);
+            transform: scale(1.02);
             box-shadow: 0 0 15px rgba(0, 150, 255, 0.4);
         }
         
-        /* Animations - optimized */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px) translateZ(0); }
-            to { opacity: 1; transform: translateY(0) translateZ(0); }
+        .close-overlay:active {
+            transform: scale(0.95);
+            transition: transform 0.1s ease;
         }
         
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px) translateZ(0); }
-            to { opacity: 1; transform: translateY(0) translateZ(0); }
-        }
-        
-        @keyframes glowBlue {
-            from { text-shadow: 0 0 5px rgba(0, 150, 255, 0.5); }
-            to { text-shadow: 0 0 15px rgba(0, 150, 255, 0.8), 0 0 20px rgba(0, 150, 255, 0.6); }
-        }
-        
-        @keyframes pulseNature {
-            0% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
-            33% { box-shadow: 0 0 30px rgba(255, 182, 193, 0.6); }
-            66% { box-shadow: 0 0 30px rgba(144, 238, 144, 0.6); }
-            100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
-        }
-        
-        @keyframes floatParticle {
-            0% { transform: translateY(100vh) translateX(0) translateZ(0); opacity: 0; }
-            10% { opacity: 0.5; }
-            90% { opacity: 0.5; }
-            100% { transform: translateY(-100px) translateX(20px) translateZ(0); opacity: 0; }
-        }
-        
-        @keyframes glow {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
-        }
-        
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-        
-        @keyframes slideDown {
-            from { transform: translateY(-20px) scale(0.95) translateZ(0); opacity: 0; }
-            to { transform: translateY(0) scale(1) translateZ(0); opacity: 1; }
-        }
-        
-        @keyframes slideUp {
-            from { transform: translateY(0) scale(1) translateZ(0); opacity: 1; }
-            to { transform: translateY(-20px) scale(0.95) translateZ(0); opacity: 0; }
-        }
-        
-        /* Mobile optimizations */
         @media (max-width: 480px) {
             .container {
                 max-width: 360px;
@@ -529,19 +565,6 @@
             .overlay-link-icon {
                 font-size: 16px;
             }
-            
-            /* Disable complex animations on mobile for better performance */
-            .logo {
-                animation: pulseNature 5s infinite alternate;
-            }
-            
-            .particle {
-                animation-duration: 30s;
-            }
-            
-            .glow-effect {
-                animation-duration: 5s;
-            }
         }
         
         @media (max-width: 360px) {
@@ -555,20 +578,6 @@
             
             .overlay-content {
                 max-width: 260px;
-            }
-        }
-        
-        /* Performance enhancements */
-        .logo, .social-icon, .section, .button, .overlay-link, .close-overlay {
-            will-change: transform;
-        }
-        
-        /* Reduced motion preference */
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
             }
         }
     </style>
@@ -595,7 +604,7 @@
     </div>
     
     <div class="header">
-        <img class="logo" src="https://i.pinimg.com/736x/d3/1d/07/d31d07313f89289e06d6cae9a38d998e.jpg" alt="YASHO Logo" loading="lazy">
+        <img class="logo" src="https://i.pinimg.com/736x/d3/1d/07/d31d07313f89289e06d6cae9a38d998e.jpg" alt="YASHO Logo">
         <div class="social-icons">
             <a href="https://www.youtube.com/@Vultir" class="social-icon youtube" target="_blank">
                 <i class="fab fa-youtube"></i>
@@ -646,23 +655,26 @@
     </div>
 
     <script>
-        // Optimized version of original JavaScript
+        // Create floating particles
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
-            const isMobile = window.innerWidth <= 480;
-            const particleCount = isMobile ? 15 : 30;
+            const particleCount = 20;
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 
-                const size = Math.random() * 6 + 2;
+                // Random size
+                const size = Math.random() * 5 + 2;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
+                
+                // Random position
                 particle.style.left = `${Math.random() * 100}vw`;
                 
+                // Random animation delay and duration
                 const delay = Math.random() * 15;
-                const duration = Math.random() * 10 + 20;
+                const duration = Math.random() * 10 + 15;
                 particle.style.animationDelay = `${delay}s`;
                 particle.style.animationDuration = `${duration}s`;
                 
@@ -670,11 +682,12 @@
             }
         }
         
+        // Open external links
         function openLink(url) {
             window.open(url, '_blank');
         }
         
-        // Marketplace overlay
+        // Marketplace overlay functionality
         const marketplaceBtn = document.getElementById('marketplaceBtn');
         const marketplaceOverlay = document.getElementById('marketplaceOverlay');
         const overlayContent = document.getElementById('overlayContent');
@@ -683,44 +696,49 @@
         marketplaceBtn.addEventListener('click', function(e) {
             e.preventDefault();
             marketplaceOverlay.style.display = 'flex';
+            // Remove any closing classes if they exist
             marketplaceOverlay.classList.remove('closing');
             overlayContent.classList.remove('closing');
         });
         
         closeOverlay.addEventListener('click', function() {
+            // Add closing animations
             marketplaceOverlay.classList.add('closing');
             overlayContent.classList.add('closing');
             
+            // Hide overlay after animation completes
             setTimeout(() => {
                 marketplaceOverlay.style.display = 'none';
+                // Remove closing classes for next time
                 marketplaceOverlay.classList.remove('closing');
                 overlayContent.classList.remove('closing');
             }, 300);
         });
         
+        // Close overlay when clicking outside content
         marketplaceOverlay.addEventListener('click', function(e) {
             if (e.target === marketplaceOverlay) {
+                // Add closing animations
                 marketplaceOverlay.classList.add('closing');
                 overlayContent.classList.add('closing');
                 
+                // Hide overlay after animation completes
                 setTimeout(() => {
                     marketplaceOverlay.style.display = 'none';
+                    // Remove closing classes for next time
                     marketplaceOverlay.classList.remove('closing');
                     overlayContent.classList.remove('closing');
                 }, 300);
             }
         });
         
-        // Ripple effect
-        let lastRippleTime = 0;
+        // Add ripple effect to buttons
         document.querySelectorAll('.button').forEach(button => {
             button.addEventListener('click', function(e) {
+                // Don't create ripple for marketplace button (it has overlay)
                 if (this.id === 'marketplaceBtn') return;
                 
-                const now = Date.now();
-                if (now - lastRippleTime < 300) return;
-                lastRippleTime = now;
-                
+                // Create ripple element
                 const ripple = document.createElement('span');
                 const rect = this.getBoundingClientRect();
                 const size = Math.max(rect.width, rect.height);
@@ -734,54 +752,15 @@
                 
                 this.appendChild(ripple);
                 
+                // Remove ripple after animation
                 setTimeout(() => {
-                    if (ripple.parentNode === this) {
-                        this.removeChild(ripple);
-                    }
+                    ripple.remove();
                 }, 600);
             });
         });
         
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            createParticles();
-            
-            // Mobile touch optimizations
-            if ('ontouchstart' in window) {
-                document.querySelectorAll('.button, .social-icon, .overlay-link, .close-overlay').forEach(el => {
-                    el.addEventListener('touchstart', function() {
-                        this.style.opacity = '0.8';
-                    }, { passive: true });
-                    
-                    el.addEventListener('touchend', function() {
-                        this.style.opacity = '1';
-                    }, { passive: true });
-                });
-            }
-            
-            // Prevent context menu on buttons
-            document.addEventListener('contextmenu', (e) => {
-                if (e.target.closest('.button, .social-icon, .overlay-link')) {
-                    e.preventDefault();
-                }
-            });
-        });
-        
-        // Smooth scrolling
-        document.documentElement.style.scrollBehavior = 'smooth';
-        
-        // Request animation frame for smoothness
-        let animationId;
-        function animate() {
-            animationId = requestAnimationFrame(animate);
-            // Smooth animations here if needed
-        }
-        animate();
-        
-        // Cleanup on unload
-        window.addEventListener('beforeunload', () => {
-            cancelAnimationFrame(animationId);
-        });
+        // Initialize particles when page loads
+        document.addEventListener('DOMContentLoaded', createParticles);
     </script>
 </body>
 </html>
