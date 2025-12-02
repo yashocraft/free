@@ -517,7 +517,7 @@
                 <div class="button" onclick="openLink('https://mcbemodpack.github.io/dl/')">
                     <i class="fas fa-dragon button-icon"></i> ModPacks
                 </div>
-                <div class="button marketplace-button" id="marketplaceBtn">
+                <div class="button marketplace-button" onclick="openLink('https://marketplacedlc.netlify.app')">
                     <i class="fas fa-shopping-cart button-icon"></i> Marketplace
                 </div>
                 <div class="button tall" onclick="openLink('https://mcdlfree.github.io/w/')">
@@ -532,28 +532,6 @@
         function openLink(url) {
             window.open(url, '_blank');
         }
-        
-        // Marketplace overlay functionality
-        const marketplaceBtn = document.getElementById('marketplaceBtn');
-        const marketplaceOverlay = document.getElementById('marketplaceOverlay');
-        const overlayContent = document.getElementById('overlayContent');
-        const closeOverlay = document.getElementById('closeOverlay');
-        
-        marketplaceBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            marketplaceOverlay.style.display = 'flex';
-        });
-        
-        closeOverlay.addEventListener('click', function() {
-            marketplaceOverlay.style.display = 'none';
-        });
-        
-        // Close overlay when clicking outside content
-        marketplaceOverlay.addEventListener('click', function(e) {
-            if (e.target === marketplaceOverlay) {
-                marketplaceOverlay.style.display = 'none';
-            }
-        });
         
         // Optimize touch interactions for mobile
         document.addEventListener('touchstart', function() {}, {passive: true});
@@ -585,4 +563,3 @@
     </script>
 </body>
 </html>
-
